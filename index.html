@@ -6,7 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/352687b833.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
       * {
         font-family: 'Montserrat', sans-serif;
@@ -17,9 +17,10 @@
       }
     </style>
   </head>
-  <body class="p-4 text-gray-900 max-w-4xl m-auto">
+  <body class="text-gray-900 max-w-4xl m-auto">
+    <!--
     <h1 class="text-4xl text-center my-12 font-bold">
-      ConsignCloud Businss Cost Calculator
+      ConsignCloud Business Cost Calculator
     </h1>
     <div class="my-8 mb-16 p-8 border border-solid border-gray-400
                 bg-gray-100 rounded shadow">
@@ -29,9 +30,10 @@
         cost you per month to run - and how soon you'll be profitable.
       </p>
     </div>
+    -->
     <div class="flex flex-col gap-8">
       <div class="flex flex-col gap-4">
-        <h2 class="text-2xl border-b border-solid border-gray-200">
+        <h2 class="text-2xl pb-2 border-b border-solid border-gray-200">
           Business Costs
         </h2>
         <table class="w-full">
@@ -49,13 +51,25 @@
               </td>
             </tr>
             <tr>
+              <td>Utilities</td>
+              <td class="text-right relative">
+                <span class="inline-block w-6 -mr-8 pr-2 z-10 relative text-gray-600">$</span>
+                <input
+                  class="border border-solid border-gray-400 rounded p-2 w-32 pl-6"
+                  type="number"
+                  name="utilities"
+                  value="400" />
+                <span class="inline-block absolute z-10 -ml-16 right-8 top-3 opacity-75 w-4">/mo</span>
+              </td>
+            </tr>
+            <tr>
               <td>
                 Business owner's policy
                 <a
                   href="https://www.investopedia.com/terms/business-owners-policy.asp"
                   target="_blank"
                   rel="noopener">
-                  <i class="fa-solid fa-circle-info text-teal-300 cursor-pointer"></i>
+                  <i class="fa-xs fa-solid fa-circle-info text-teal-300 cursor-pointer"></i>
                 </a>
               </td>
               <td class="text-right relative">
@@ -75,7 +89,7 @@
                   href="https://www.benzinga.com/money/workers-comp-calculator"
                   target="_blank"
                   rel="noopener">
-                  <i class="fa-solid fa-circle-info text-teal-300 cursor-pointer"></i>
+                  <i class="fa-xs fa-solid fa-circle-info text-teal-300 cursor-pointer"></i>
                 </a>
               </td>
               <td class="text-right relative">
@@ -89,7 +103,7 @@
               </td>
             </tr>
             <tr>
-              <td>Payroll costs</td>
+              <td>Employee wages</td>
               <td class="text-right relative">
                 <span class="inline-block w-6 -mr-8 pr-2 z-10 relative text-gray-600">$</span>
                 <input
@@ -104,10 +118,10 @@
         </table>
       </div>
       <div class="flex flex-col gap-4">
-        <h2 class="text-2xl border-b border-solid border-gray-200">
-          Payment Processing
+        <h2 class="text-2xl pb-2 border-b border-solid border-gray-200">
+          Payment processing
         </h2>
-        <h3 class="text-lg mt-2">What is your average sale amount?</h3>
+        <h3 class=" mt-2">What is your average sale amount?</h3>
         <div class="flex">
           <div class="mr-4">$1</div>
           <input
@@ -158,18 +172,52 @@
                   step="0.1" />
               </td>
             </tr>
+            <tr>
+              <td>Sales tax</td>
+              <td class="text-right relative">
+                <span class="inline-block w-6 -mr-8 pr-2 z-10 relative text-gray-600">%</span>
+                <input
+                  class="border border-solid border-gray-400 rounded p-2 w-32 pl-6"
+                  type="number"
+                  name="salesTax"
+                  value="5" />
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
       <div class="flex flex-col gap-4">
-        <h2 class="text-2xl border-b border-solid border-gray-200">
+        <h2 class="text-2xl pb-2 border-b border-solid border-gray-200">
+          Inventory Costs
+        </h2>
+        <h3 class="mt-2">How much do you spend on inventory?</h3>
+        <p>
+          Many resale shops operate using a consignment cost model, making it very easy
+          to anticipate how much each sale will cost you. If you use retail or buy-outright
+          rather than consignment, calculate your average COGS as a percentage of sales.
+        </p>
+        <div class="flex">
+          <div class="mr-4">0</div>
+          <input
+            class="w-full"
+            type="range"
+            min="0"
+            max="100"
+            value="50"
+            name="consignorSplit">
+          <div class="ml-4">100</div>
+        </div>
+        <div id="consignorSplitDisplay" class="text-center">50%</div>
+      </div>
+      <div class="flex flex-col gap-4">
+        <h2 class="text-2xl pb-2 border-b border-solid border-gray-200">
           Payout Processing
         </h2>
-        <h3 class="mt-2 text-lg">How many payouts do you process per month?</h3>
+        <h3 class="mt-2">How many payouts do you process per month?</h3>
         <p>
           A quick way to calculate this - take your number of active accounts
           (usually around 20% of the total), and divide by how often you process payouts.
-          So for example if you have 30 active accounts, and you pay out once every 3 months,
+          For example if you have 30 active accounts, and you pay out once every 3 months,
           you would be processing 10 payouts per month.
         </p>
         <div class="flex">
@@ -194,23 +242,23 @@
                   class="border border-solid border-gray-400 rounded p-2 w-32 pl-6"
                   type="number"
                   name="payoutCost"
-                  step="0.01"
-                  value="0.50" />
+                  step="0.1"
+                  value="1.00" />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="flex flex-col gap-4">
-        <h2 class="text-2xl border-b border-solid border-gray-200">
-          Software Subscriptions
+        <h2 class="text-2xl pb-2 border-b border-solid border-gray-200">
+          Additional Monthly Expenses
         </h2>
         <table class="w-full" id="subscriptions">
           <tbody>
             <tr id="addSubscription">
               <td colspan="2" class="cursor-pointer">
                 <span>
-                  <i class="fa-solid fa-plus cursor-pointer mx-2"></i> Add a subscription
+                  <i class="fa-solid fa-plus cursor-pointer mx-2"></i> Add an expense
                 </span>
               </td>
             </tr>
@@ -218,7 +266,7 @@
         </table>
       </div>
       <div class="flex flex-col gap-4">
-        <h2 class="text-2xl border-b border-solid border-gray-200">
+        <h2 class="text-2xl pb-2 border-b border-solid border-gray-200">
           Your Results
         </h2>
         <div>
@@ -227,7 +275,10 @@
         <div class="my-8 mb-16 p-8 border border-solid border-gray-400
                     bg-gray-100 rounded shadow">
           <p class="pb-4">
-            The chart above shows how your business costs scale with your sales volume.
+            The chart above shows how your business costs will scale with your sales volume
+            on a monthly basis. The point at which the red line rises above the rest represents
+            your break-even point. Everything to the right of that point is profit; everything to
+            the left is loss.
           </p>
         </div>
       </div>
@@ -265,35 +316,76 @@
         return values
       }
 
-      const calculateRevenue = sales => {
-        const {avgSale} = getValues()
-
-        return sales
-      }
-
       const calculateCosts = sales => {
         const {
-          avgSale, insurance, lease, paymentFee, paymentRate, paymentSubscription,
-          payroll, salesVolume, workersComp, payoutsPerMonth, payoutCost,
+          avgSale, insurance, lease, utilities, paymentFee, paymentRate, salesTax,
+          paymentSubscription, payroll, salesVolume, workersComp, payoutsPerMonth,
+          payoutCost, consignorSplit,
         } = getValues()
 
-        return (
-          avgSale * paymentFee + sales * paymentRate / 100
-          + payoutsPerMonth * payoutCost
-          + lease + paymentSubscription + payroll
-          + (insurance + workersComp) / 12
-          + [].slice
-            .apply($$('[name="subscription[]"]'))
-            .reduce((t, $i) => t + parseFloat($i.value), 0)
+        const subscriptions = [].slice
+          .apply($$('[name="subscription[]"]'))
+          .reduce((t, $i) => t + parseFloat($i.value), 0)
+
+        return {
+          'Business, Insurance, and Subscriptions': (
+            subscriptions + lease + utilities + payroll + (insurance + workersComp) / 12
+          ),
+          'Payment and Payout Processing': (
+            (sales / avgSale) * paymentFee
+            + sales * (paymentRate / 100)
+            + paymentSubscription
+            + sales * (salesTax / 100)
+            + payoutsPerMonth * payoutCost
+          ),
+          'Inventory Cost': sales * (consignorSplit / 100),
+        }
+      }
+
+      const calculateSales = () => initArray(31, i => i * 1000)
+
+      const calculateDatasets = () => {
+        const sales = calculateSales()
+        const costs = sales.map(x => calculateCosts(x))
+
+        const colors = {
+          'Inventory Cost': 'rgba(134, 146, 206, 1)',
+          'Payment and Payout Processing': 'rgba(242, 158, 76, 1)',
+          'Business, Insurance, and Subscriptions': 'rgba(97, 208, 149, 1)',
+        }
+
+        const fills = {
+          'Inventory Cost': '#E7E9F4',
+          'Payment and Payout Processing': '#FAECDE',
+          'Business, Insurance, and Subscriptions': '#E5F5EB',
+        }
+
+        const keys = Array.from(Object.keys(colors))
+
+        keys.reverse()
+
+        return [{
+          label: 'Revenue',
+          data: sales,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+        }].concat(
+          keys
+            .map((k, i) => ({
+              label: k,
+              stack: 'cost',
+              fill: true,
+              data: costs.map(x => Math.round(x[k])),
+              backgroundColor: fills[k],
+              borderColor: colors[k],
+            }))
         )
       }
 
-      const calculateData = calculateDataPoint =>
-        initArray(21, i => calculateDataPoint(i * 1000))
-
       const updateChart = () => {
-        chart.data.datasets[0].data = calculateData(calculateCosts)
-        chart.data.datasets[1].data = calculateData(calculateRevenue)
+        calculateDatasets().forEach(({data}, i) => {
+          chart.data.datasets[i].data = data
+        })
 
         chart.update()
       }
@@ -306,7 +398,7 @@
         <td>
           <i class="fa fa-times cursor-pointer mx-2"></i>
           <input
-            class="border border-solid border-gray-400 rounded p-2 w-32 pl-6 w-3/4"
+            class="border border-solid border-gray-400 rounded p-2 w-3/4"
             placeholder="Subscription name"
             value="${name}" />
         </td>
@@ -347,29 +439,47 @@
         $('#payoutsPerMonthDisplay').innerHTML = addCommas(getValues().payoutsPerMonth)
       })
 
+      $('[name=consignorSplit]').addEventListener('input', e => {
+        $('#consignorSplitDisplay').innerHTML = `${getValues().consignorSplit}%`
+      })
+
       $('#addSubscription span').addEventListener('click', e => addSubscription())
 
       const startingData = getValues()
       const chart = new Chart($chart, {
         type: 'line',
         data: {
-          labels: calculateData(sales => `$${addCommas(sales)}`),
-          datasets: [{
-            label: 'Business Costs',
-            data: calculateData(calculateCosts),
-            backgroundColor: 'rgba(54, 162, 235, 0.0)',
-            borderColor: '#8692ce',
-          }, {
-            label: 'Revenue',
-            data: calculateData(calculateRevenue),
-            backgroundColor: 'rgba(255, 99, 132, 0.0)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-          }],
+          labels: calculateSales(sales => `$${addCommas(sales)}`),
+          datasets: calculateDatasets(),
         },
         options: {
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
           scales: {
-            yAxes: [{ticks: {callback: v => `$${v}/mo`}}],
-          }
+            x: {
+              ticks: {
+                callback: function(x) {
+                  return'$' + addCommas(this.getLabelForValue(x))
+                },
+              },
+            },
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                title: ([revenue, ...other]) => {
+                  const cost = other.reduce((t, x) => t + x.raw, 0)
+
+                  return 'Profit: $' + addCommas(revenue.raw - cost)
+                },
+                label: context => {
+                  return `${context.dataset.label}: $${context.formattedValue}`
+                },
+              },
+            },
+          },
         }
       })
 
